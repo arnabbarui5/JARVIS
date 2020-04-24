@@ -1,0 +1,91 @@
+The first task is my AI will do is speak . so I am defining a function speak and whatever argument I will give it will speak.It will pronounce the audio
+
+def speak(audio):
+   pass
+
+1st step : I have installed pyttsx3 library which will convert my audio to text  (import pyttsx3)
+
+2nd step : I am using Microsoft speech API (SAPI5) that will take our voice and speak in the inbuilt Windows voice. We are getting the voices from the engine
+           and I am using seyProperty to set the voice . When I print the voices (voices[1].id) it prints Zira(female) and (Voice[2].id) it prints David(male)
+     
+             engine = pyttsx3.init('sapi5')
+             voices = engine.getProperty('voices')
+             # print(voices[1].id)
+             engine.setProperty('voice', voices[0].id)
+
+
+3rd step: Whatever I speak the AI it will say using 'Engine.say(audio)'
+
+4th step : def wishMe():
+           hour = int(datetime.datetime.now().hour)     // I will get the hour and convert into int (0 - 24). It will check the condition and speak.
+          if hour>=0 and hour<12:
+            speak("Good Morning!")
+
+          elif hour>=12 and hour<18:
+             speak("Good Afternoon!")  
+
+          else:
+           speak("Good Evening!") 
+
+         speak("I am Jarvis Sir. Please tell me how may I help you")
+
+5th step : I imported speech Recogniton module
+
+6th step : I will write a function take command (# It takes microphone input from the user and returns string output)
+
+
+     r = sr.Recognizer()                       // Recognizer class will help us to recognize audio and I will use Microphone as a source and print Listening.
+      with sr.Microphone() as source:             The user who is using will get a message "Listening..."
+        print("Listening...")                    // Pause Threshold -- Seconds of non speaking audio to before a phrase is considered complete
+        r.pause_threshold = 1 
+        audio = r.listen(source)                  // listen will listen the microphone
+
+
+
+7th step : 
+
+
+              r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        r.pause_threshold = 1 
+        audio = r.listen(source)  
+
+    try:
+        print("Recognizing...")
+        query = r.recognize_google(audio, language="en-in")     // Google speech Recognition API
+        print(f"User said: {query}\n") 
+
+    except Exception as e:
+        # print(e)
+        print("Say that again please...") 
+        return "None"                                  // Return None after saying "Say that again" and return the query and again we will speak
+    return query 
+
+
+
+
+8th step : Logic to excecute task
+
+    if __name__ == "__main__":
+    wishMe()
+    while True:
+    #if 1:
+        query = takeCommand().lower()               // converts all query to lower case 
+
+        # Logic for executing tasks based on query
+        if 'wikipedia' in query:  
+            speak('Searching Wikipedia...')
+            query = query.replace("wikipedia", "")          // if Wikipedia is query, take that wikipedia and seach in the web 
+            results = wikipedia.summary(query, sentences=2)
+            speak("According to Wikipedia")
+            print(results)
+            speak(results)
+
+
+
+
+
+
+
+         
